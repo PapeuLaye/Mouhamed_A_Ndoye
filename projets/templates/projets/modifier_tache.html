@@ -1,0 +1,33 @@
+{% extends 'projets/base.html' %}
+
+{% block title %}Modifier Tâche{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center">Modifier la Tâche</h2>
+
+        <div class="card shadow-lg p-4 mt-4">
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-warning">Enregistrer</button>
+               {% if tache.projet %}
+                    <a href="{% url 'detail_projet' tache.projet.id %}" class="btn btn-secondary">Retour</a>
+                {% else %}
+                    <a href="{% url 'liste_projets' %}" class="btn btn-secondary">Retour</a>
+               {% endif %}
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

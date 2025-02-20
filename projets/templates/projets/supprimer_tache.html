@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supprimer Tâche</title>
+</head>
+<body>
+    <h2>Voulez-vous vraiment supprimer "{{ tache.titre }}" ?</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Oui, supprimer</button>
+    </form>
+    <a href="{% url 'detail_projet' tache.projet.id %}">Annuler</a>
+</body>
+</html>

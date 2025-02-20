@@ -1,0 +1,23 @@
+{% extends 'projets/base.html' %}
+
+{% block title %}Liste des Projets{% endblock %}
+
+{% block content %}
+    <h2 class="text-center mb-4">Mes Projets</h2>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'creer_projet' %}" class="btn btn-primary">Créer un projet</a>
+    </div>
+
+    <div class="list-group">
+        {% for projet in projets %}
+            <a href="{% url 'detail_projet' projet.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                {{ projet.nom }}
+                <span>
+                    <a href="{% url 'modifier_projet' projet.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="{% url 'supprimer_projet' projet.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                </span>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
