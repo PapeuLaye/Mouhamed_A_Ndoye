@@ -1,9 +1,36 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+from utilisateurs.permissions import IsProfesseur, IsEtudiant
 from .models import Projet, Tache
 from .forms import ProjetForm, TacheForm
+from .serializers import ProjetSerializer, TacheSerializer
 
 
+class ProjetViewSet(viewsets.ModelViewSet):
+    queryset = Projet.objects.all()
+    serializer_class = ProjetSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action in ['create', 'destroy']:
+            self.permission_classes = [IsAuthenticated, IsProfesseur]
+        return super().get_permissions()
+
+class TacheViewSet(viewsets.ModelViewSet):
+    queryset = Tache.objects.all()
+    serializer_class = TacheSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action == 'create':  # Création de tâche réservée aux professeurs
+            self.permission_classes = [IsAuthenticated, IsProfesseur]
+        elif self.action in ['update', 'partial_update']:  # Mise à jour par l'utilisateur assigné uniquement
+            self.permission_classes = [IsAuthenticated, IsEtudiant]
+        return super().get_permissions()
 @login_required
 def liste_projets(request):
     projets = Projet.objects.filter(chef_projet=request.user)
@@ -41,8 +68,6 @@ def supprimer_projet(request, projet_id):
         projet.delete()
         return redirect('liste_projets')
     return render(request, 'projets/supprimer_projet.html', {'projet': projet})
-
-
 
 @login_required
 def ajouter_tache(request, projet_id):

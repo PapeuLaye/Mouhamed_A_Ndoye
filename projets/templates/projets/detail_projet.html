@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Détails du Projet</title>
-</head>
-<body>
+{% extends 'projets/base.html' %}
+
+{% block title %}Détails du Projet{% endblock %}
+
+{% block content %}
     <h2>Projet : {{ projet.nom }}</h2>
     <p>{{ projet.description }}</p>
 
@@ -19,5 +18,4 @@
         {% endfor %}
     </ul>
     <a href="{% url 'liste_projets' %}">Retour</a>
-</body>
-</html>
+{% endblock %}

@@ -1,6 +1,14 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
+
+from utilisateurs.views import UtilisateurViewSet
 from .views import liste_projets, creer_projet, modifier_projet, supprimer_projet, ajouter_tache, modifier_tache, \
-    supprimer_tache, detail_projet
+    supprimer_tache, detail_projet, ProjetViewSet, TacheViewSet
+
+router = DefaultRouter()
+router.register(r'utilisateurs', UtilisateurViewSet)
+router.register(r'projets', ProjetViewSet)
+router.register(r'taches', TacheViewSet)
 
 urlpatterns = [
     path('', liste_projets, name='liste_projets'),

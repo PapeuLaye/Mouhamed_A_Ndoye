@@ -1,0 +1,24 @@
+<div class="container mt-5">
+  <div class="card p-4 shadow-lg mx-auto" style="max-width: 400px;">
+    <h2 class="text-center text-primary">Connexion</h2>
+    <form (ngSubmit)="login()">
+      <div class="mb-3">
+        <label class="form-label">Nom d'utilisateur</label>
+        <input type="text" [(ngModel)]="credentials.username" name="username" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Mot de passe</label>
+        <input type="password" [(ngModel)]="credentials.password" name="password" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+
+      <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+
+      <div class="mt-3 text-center">
+        <p>Pas encore de compte ? <a routerLink="/register" class="text-decoration-none text-primary">Inscrivez-vous</a></p>
+      </div>
+    </form>
+  </div>
+</div>

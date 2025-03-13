@@ -20,11 +20,16 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from projets.urls import router
+
 urlpatterns = [
     path('', lambda request: redirect('inscription'), name='accueil'),
     path('admin/', admin.site.urls),
     path('', include('utilisateurs.urls')),
     path('projets/', include('projets.urls')),
+    path('api/', include(router.urls)),
+    path('utilisateurs/', include('utilisateurs.urls')),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

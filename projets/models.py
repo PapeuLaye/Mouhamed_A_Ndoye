@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.auth import get_user_model
 
+
 # Récupère le modèle utilisateur de Django
 Utilisateur = get_user_model()
 
